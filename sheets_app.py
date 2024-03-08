@@ -36,8 +36,11 @@ st.title('🦜🔗 Sheets App')
 sheet = st.text_input('Link to editable Google sheet')
 sheet_csv = sheet[:-16]+"export?format=csv"
 
-loader = CSVLoader(sheet_csv)
-documents = loader.load()
+if sheet!="": 
+  loader = CSVLoader(sheet_csv)
+  documents = loader.load()
+else:
+  st.caption("Please paste file link")
 
 qdrant = Qdrant.from_documents(
     documents[0:100],
