@@ -29,7 +29,7 @@ creds = service_account.Credentials.from_service_account_file(
 
 # Replace the placeholders with your spreadsheet ID and range
 service = build('sheets', 'v4', credentials=creds)
-sheet = service.spreadsheets()
+sheets = service.spreadsheets()
 
 st.title('🦜🔗 Sheets App')
 #https://docs.google.com/spreadsheets/d/1dh771MJAZ7Q1F4CZtmlIHrCQ2iYWwKi_OQC0MQZi6kY/edit?usp=sharing
@@ -53,7 +53,7 @@ def generate_response(input_text):
 
 if sheet!="":
 
-  result = sheet.values().get(spreadsheetId=sheet_csv, range='Form Responses 1').execute()
+  result = sheets.values().get(spreadsheetId=sheet_csv, range='Form Responses 1').execute()
   df = pd.DataFrame(result.get('values', []))
   df.to_csv('file1.csv')
   documents = CSVLoader('file1.csv').load()
