@@ -13,5 +13,3 @@ To use the app do the following -
 3. Deploy the app on Streamlit Cloud server.
 4. In the text box, add the editable (public access) link of the Response Sheet.
 5. Type your question and click on Submit to get the answer.
-
-_(This code seems to work fine on Colab but I am facing an issue with the Google-Sheets-API while deploying the app on Streamlit.)_
