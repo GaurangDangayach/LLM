@@ -9,6 +9,7 @@ from langchain.schema.output_parser import StrOutputParser
 from langchain.schema.runnable import RunnablePassthrough
 from langchain.prompts import ChatPromptTemplate
 import streamlit as st
+import pandas as pd
 
 os.environ["HUGGINGFACEHUB_API_TOKEN"] = "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"
 
@@ -17,10 +18,23 @@ api_key="fTx_XsidcbLSZHka9s2d28M2kq8v9AVoqwMo0EcPSiSzffViVFMtig"
 
 embeddings = HuggingFaceEmbeddings()
 
-st.title('🦜🔗 Sheets App')
+from google.oauth2 import service_account
+from googleapiclient.discovery import build
 
+# Replace the placeholders with your API credentials
+creds = service_account.Credentials.from_service_account_file(
+    'lyrical-country-416813-b9ad9b74b0f8.json',
+    scopes=['https://www.googleapis.com/auth/spreadsheets.readonly']
+)
+
+# Replace the placeholders with your spreadsheet ID and range
+service = build('sheets', 'v4', credentials=creds)
+sheet = service.spreadsheets()
+
+st.title('🦜🔗 Sheets App')
+#https://docs.google.com/spreadsheets/d/1dh771MJAZ7Q1F4CZtmlIHrCQ2iYWwKi_OQC0MQZi6kY/edit?usp=sharing
 sheet = st.text_input('Link to editable Google sheet')
-sheet_csv = sheet[:-16]+"export?format=csv"
+sheet_csv = sheet[39:-17]
 
 llm = HuggingFaceHub(repo_id="declare-lab/flan-alpaca-base",model_kwargs={"temperature": 0,"max_length": 512})
 
@@ -38,8 +52,11 @@ def generate_response(input_text):
     st.info(rag_chain.invoke(input_text))
 
 if sheet!="":
-  loader = CSVLoader(sheet_csv)
-  documents = loader.load()
+
+  result = sheet.values().get(spreadsheetId=sheet_csv, range='Form Responses 1').execute()
+  df = pd.DataFrame(result.get('values', []))
+  df.to_csv('file1.csv')
+  documents = CSVLoader('file1.csv').load()
 
   qdrant = Qdrant.from_documents(
     documents[0:100],
@@ -67,4 +84,3 @@ if sheet!="":
 
 else:
   st.caption("Please paste file link")
-
