@@ -54,7 +54,7 @@ def generate_response(input_text):
 if sheet!="":
 
   result = sheet.values().get(spreadsheetId=sheet_csv, range='Form Responses 1').execute()
-  df = pd.DataFrame(result.get('values', []))
+  df = pd.DataFrame(result)
   df.to_csv('file1.csv')
   documents = CSVLoader('file1.csv').load()
 
