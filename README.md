@@ -13,3 +13,5 @@ To use the app do the following -
 3. Deploy the app on Streamlit Cloud server.
 4. In the text box, add the editable (public access) link of the Response Sheet.
 5. Type your question and click on Submit to get the answer.
+
+_**Note:** I am currently facing a bug in the code in using Google Sheets API and I am trying to resolve it._
