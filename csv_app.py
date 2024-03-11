@@ -10,10 +10,10 @@ from langchain.schema.runnable import RunnablePassthrough
 from langchain.prompts import ChatPromptTemplate
 import streamlit as st
 
-os.environ["HUGGINGFACEHUB_API_TOKEN"] = "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"
+os.environ["HUGGINGFACEHUB_API_TOKEN"] = "XXXXXX"
 
-url="https://3d7bfaa8-bd3a-4fc2-a3d7-d258ffa31eda.us-east4-0.gcp.cloud.qdrant.io:6333"
-api_key="fTx_XsidcbLSZHka9s2d28M2kq8v9AVoqwMo0EcPSiSzffViVFMtig"
+url="YYYY"
+api_key="ZZZZ"
 
 embeddings = HuggingFaceEmbeddings()
 
